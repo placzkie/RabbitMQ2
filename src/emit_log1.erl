@@ -14,7 +14,7 @@ main(Argv) ->
 
   Message = case Argv of
               [] -> <<"info: Hello World!">>;
-              Msg -> list_to_binary(Msg)%%string:join(Msg, " "))
+              Msg -> list_to_binary(string:join(Msg, " "))
             end,
   amqp_channel:cast(Channel,
     #'basic.publish'{exchange = <<"logs">>},

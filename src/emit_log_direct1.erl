@@ -18,7 +18,7 @@ main(Argv) ->
                           [S] ->
                             {list_to_binary(S), <<"Hello World!">>};
                           [S | Msg] ->
-                            {list_to_binary(S), list_to_binary(Msg)}%%string:join(Msg, " "))}
+                            {list_to_binary(S), list_to_binary(string:join(Msg, " "))}
                         end,
   amqp_channel:cast(Channel,
     #'basic.publish'{
