@@ -1,5 +1,3 @@
-%%#!/usr/bin/env escript
-%%! -pz ./amqp_client ./rabbit_common ./amqp_client/ebin ./rabbit_common/ebin
 -module(emit_log_topic1).
 -include_lib("amqp_client/include/amqp_client.hrl").
 -export([main/1]).
@@ -9,6 +7,7 @@ main(Argv) ->
     amqp_connection:start(#amqp_params_network{host = "localhost"}),
   {ok, Channel} = amqp_connection:open_channel(Connection),
 
+  %%exchange_type = topic
   amqp_channel:call(Channel, #'exchange.declare'{exchange = <<"topic_logs">>,
     type = <<"topic">>}),
 

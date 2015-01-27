@@ -1,5 +1,3 @@
-%%#!/usr/bin/env escript
-%%! -pz ./amqp_client ./rabbit_common ./amqp_client/ebin ./rabbit_common/ebin
 -module(new_task1).
 -include_lib("amqp_client/include/amqp_client.hrl").
 -export([main/1]).
@@ -9,6 +7,7 @@ main(Argv) ->
     amqp_connection:start(#amqp_params_network{host = "localhost"}),
   {ok, Channel} = amqp_connection:open_channel(Connection),
 
+  %%tworzenie kolejki, durable - kolejka po restarcie serwera będzie nadal istniała
   amqp_channel:call(Channel, #'queue.declare'{queue = <<"task_queue">>,
     durable = true}),
 
@@ -20,6 +19,7 @@ main(Argv) ->
     #'basic.publish'{
       exchange = <<"">>,
       routing_key = <<"task_queue">>},
+    %%persistent message
     #amqp_msg{props = #'P_basic'{delivery_mode = 2},
       payload = Message}),
   io:format(" [x] Sent ~p~n", [Message]),

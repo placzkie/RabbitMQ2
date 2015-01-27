@@ -1,5 +1,3 @@
-%%#!/usr/bin/env escript
-%%! -pz ./amqp_client ./rabbit_common ./amqp_client/ebin ./rabbit_common/ebin
 -module(receive_logs_topic1).
 -include_lib("amqp_client/include/amqp_client.hrl").
 -export([main/1]).

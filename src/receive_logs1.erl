@@ -1,5 +1,3 @@
-%%#!/usr/bin/env escript
-%%! -pz ./amqp_client ./rabbit_common ./amqp_client/ebin ./rabbit_common/ebin
 -module(receive_logs1).
 -include_lib("amqp_client/include/amqp_client.hrl").
 -export([main/1]).
@@ -12,9 +10,11 @@ main(_) ->
   amqp_channel:call(Channel, #'exchange.declare'{exchange = <<"logs">>,
     type = <<"fanout">>}),
 
+  %%tworzenie kolejki o domyślnej nazwie
   #'queue.declare_ok'{queue = Queue} =
     amqp_channel:call(Channel, #'queue.declare'{exclusive = true}),
 
+  %%wiązanie utworzonej kolejki z exchnge o nazwie "logs"
   amqp_channel:call(Channel, #'queue.bind'{exchange = <<"logs">>,
     queue = Queue}),
 
